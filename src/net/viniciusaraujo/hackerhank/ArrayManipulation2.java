@@ -84,10 +84,7 @@ public class ArrayManipulation2 {
                 ? Optional.of(
                     new Range(
                         range.start(),
-                        ( operationRange.start() <= range.end() 
-                            ? operationRange.start() - 1
-                            : range.end()
-                        )    
+                        Math.min( range.end(), (operationRange.start() - 1) )  
                     ))
                 : Optional.empty();
         }
@@ -110,7 +107,7 @@ public class ArrayManipulation2 {
             return operationRange.end() < range.end()
                 ? Optional.of(
                     new Range(
-                        operationRange.end() + 1,
+                        Math.max( (operationRange.end() + 1), range.start() ),
                         range.end()
                     ))
                 : Optional.empty();
