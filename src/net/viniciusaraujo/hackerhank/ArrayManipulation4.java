@@ -1,17 +1,16 @@
 package net.viniciusaraujo.hackerhank;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.Stack;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
-public class ArrayManipulation2 {
+public class ArrayManipulation4 {
     public static void main(String[] args) throws IOException {
         //expected 2490686975
         final String path = "D:\\Projetos\\hackerrank\\src\\input\\";
@@ -19,7 +18,7 @@ public class ArrayManipulation2 {
         Scanner scanner = new Scanner(
             new File(path + "arraymanipulation-testcase13.txt"));
 
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(path + "result.txt")));
+        // BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(path + "result.txt")));
 
         String[] nm = scanner.nextLine().split(" ");
 
@@ -38,20 +37,19 @@ public class ArrayManipulation2 {
                 queries[i][j] = queriesItem;
             }
         }
-        try {
-            long result = arrayManipulation(n, queries);
-            bufferedWriter.write(String.valueOf(result));
-            bufferedWriter.newLine();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
 
-        bufferedWriter.close();
+        long result = arrayManipulation(n, queries);
+
+        System.out.println("Resultado: " + result);
+        // bufferedWriter.write(String.valueOf(result));
+        // bufferedWriter.newLine();
+
+        // bufferedWriter.close();
 
         scanner.close();
     }
 
-    public static void main2(String[] args) {
+    public static void main1(String[] args) {
         System.out.println(
             "Resultado 1: " + 
             arrayManipulation(5, new int[][] {
@@ -90,10 +88,12 @@ public class ArrayManipulation2 {
     static class Range {
         private final int start;
         private final int end;
+        private long value;
 
-        public Range(int start, int end) {
+        public Range(int start, int end, long initialValue) {
             this.start = start;
             this.end = end;
+            this.value = initialValue;
         }
 
         public int start() {
@@ -102,6 +102,19 @@ public class ArrayManipulation2 {
 
         public int end() {
             return this.end;
+        }
+
+        public long getValue() {
+            return this.value;
+        }
+
+        public void add(long value) {
+            this.value += value;
+        }
+
+        public boolean containsRange(Range range) {
+            return range.start() >= this.start() 
+                && range.end() <= this.end();
         }
     }
 
@@ -128,7 +141,8 @@ public class ArrayManipulation2 {
                 ? Optional.of(
                     new Range(
                         range.start(),
-                        Math.min( range.end(), (operationRange.start() - 1) )  
+                        Math.min( range.end(), (operationRange.start() - 1) ),
+                        range.getValue()  
                     ))
                 : Optional.empty();
         }
@@ -142,7 +156,8 @@ public class ArrayManipulation2 {
                 ? Optional.of(
                     new Range(
                         Math.max(opRange.start(), range.start()),
-                        Math.min(opRange.end(), range.end())
+                        Math.min(opRange.end(), range.end()),
+                        range.getValue()
                     ))
                 : Optional.empty();
         }
@@ -152,7 +167,8 @@ public class ArrayManipulation2 {
                 ? Optional.of(
                     new Range(
                         Math.max( (operationRange.end() + 1), range.start() ),
-                        range.end()
+                        range.end(),
+                        range.getValue()
                     ))
                 : Optional.empty();
         }
@@ -179,49 +195,53 @@ public class ArrayManipulation2 {
         }
 
         private Range createFullRange() {
-            return new Range(1, this.maxOperationRange);
+            return new Range(1, this.maxOperationRange, 0);
         }
 
-        private long getMaxValueForRangeAtLevel(Range range, int operation) {
-            long maxValueForRange = 0;
-            final Range operationRange = this.getOperationRange(operation);
-            final List<Range> splitedRanges = new RangeSplitter(range).splitFromOperationRange(operationRange);
-            final boolean hasMoreOperationsToCalc = operation > 0;
-            
-            for (Range subRange : splitedRanges) {
-                final long operationValueToAdd = 
-                    this.isRangeInsideOperationRange(subRange, operationRange)
-                        ? this.value(operation)
-                        : 0 ;
-                final long acumulatedValue = hasMoreOperationsToCalc 
-                        ? this.getMaxValueForRangeAtLevel(subRange, this.operationNextLevel(operation))
-                        : 0 ;
-                final long subRangeMaxValue = operationValueToAdd + acumulatedValue;
+        private long getMaxValueForRangeAtLevel(Range range, int operation) {            
+            List<Range> subranges = new LinkedList<>();
+            subranges.add(range);
 
-                maxValueForRange = Math.max(maxValueForRange, subRangeMaxValue);
+            for (int i = operation; i > -1; i--) {                
+                final Range operationRange = this.getOperationRange(i);
+                final long opValue = operationRange.getValue();
+
+                List<Range> newSubranges = subranges.parallelStream()
+                    .flatMap(r -> {
+                        List<Range> split = new RangeSplitter(r).splitFromOperationRange(operationRange);
+
+                        return split.parallelStream()
+                            .peek(s -> {
+                                if (this.isRangeInsideOperationRange(s, operationRange)) {
+                                    s.add(opValue);
+                                }
+                            });
+                    })
+                    .collect(Collectors.toList());
+                
+
+                subranges = newSubranges;
             }
 
-            return maxValueForRange;
+            return subranges.stream()
+                .mapToLong(Range::getValue)
+                .max()
+                .getAsLong();
         }
+
+        
 
         private boolean isRangeInsideOperationRange(Range range, Range operationRange) {
             return range.start() >= operationRange.start() 
                 && range.end() <= operationRange.end();
         }
 
-        private int value(int operation) {
-            return this.operations[operation][VALUE_INDEX];
-        }
-
-        private int operationNextLevel(int operation) {
-            return operation - 1;
-        }
-
         private Range getOperationRange(int operation) {
             final int[] operationData = this.operations[operation];
             return new Range(
                 operationData[START_INDEX],
-                operationData[END_INDEX]);
+                operationData[END_INDEX],
+                operationData[VALUE_INDEX]);
         }
     }
 }

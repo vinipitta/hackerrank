@@ -1,0 +1,98 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ArrayManipulation4",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.ArrayManipulation4",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ArrayManipulation3",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.ArrayManipulation3",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Executar com fila aumentada",
+            "request": "launch",
+            "mainClass": "${file}",
+            "vmArgs": "-Xss20M"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-App<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ArrayManipulation<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.ArrayManipulation",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ArrayManipulation2<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.ArrayManipulation2",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-HourglassSumSolution<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.HourglassSumSolution",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-JumpingOnCloudsSolution<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.JumpingOnCloudsSolution",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-LeftRotation<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.LeftRotation",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-MinimumBribesSolution<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.MinimumBribesSolution",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-MinimumSwaps2<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.MinimumSwaps2",
+            "projectName": "hackerrank_b3b87d40"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-RepeatedStringSolution<hackerrank_b3b87d40>",
+            "request": "launch",
+            "mainClass": "net.viniciusaraujo.hackerhank.RepeatedStringSolution",
+            "projectName": "hackerrank_b3b87d40"
+        }
+    ]
+}
