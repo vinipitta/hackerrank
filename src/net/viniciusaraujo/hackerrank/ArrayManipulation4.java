@@ -1,4 +1,4 @@
-package net.viniciusaraujo.hackerhank;
+package net.viniciusaraujo.hackerrank;
 
 import java.io.File;
 import java.io.IOException;

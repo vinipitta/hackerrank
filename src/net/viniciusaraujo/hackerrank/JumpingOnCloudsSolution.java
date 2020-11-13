@@ -1,4 +1,4 @@
-package net.viniciusaraujo.hackerhank;
+package net.viniciusaraujo.hackerrank;
 
 public class JumpingOnCloudsSolution {
     

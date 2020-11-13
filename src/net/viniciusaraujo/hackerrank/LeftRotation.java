@@ -1,4 +1,4 @@
-package net.viniciusaraujo.hackerhank;
+package net.viniciusaraujo.hackerrank;
 
 import java.util.function.Function;
 import java.util.stream.Collectors;

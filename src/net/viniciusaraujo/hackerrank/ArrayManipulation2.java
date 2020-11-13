@@ -1,4 +1,4 @@
-package net.viniciusaraujo.hackerhank;
+package net.viniciusaraujo.hackerrank;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.Stack;
 import java.util.function.Consumer;
 
 public class ArrayManipulation2 {
